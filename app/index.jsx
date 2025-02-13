@@ -4,9 +4,10 @@ import { View, Text, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { images } from "../constants";
+import { CustomButton} from "../components";
 
 const Welcome = () => {
-
+  
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -51,7 +52,7 @@ const Welcome = () => {
           <CustomButton
             title="Continue with Email"
             handlePress={() => router.push("/sign-in")}
-            containerStyles="w-full mt-7"
+            containerStyles="w-full mt-7 mb-4"
           />
         </View>
       </ScrollView>
