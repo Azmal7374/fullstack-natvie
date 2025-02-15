@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ResizeMode, Video } from "expo-av";
 import * as Animatable from "react-native-animatable";
 import {
   FlatList,
   Image,
   ImageBackground,
-  Text,
   TouchableOpacity,
 } from "react-native";
 
@@ -79,11 +78,11 @@ const TrendingItem = ({ activeItem, item }) => {
 const Trending = ({ posts }) => {
   const [activeItem, setActiveItem] = useState(posts[0]);
 
-  const viewableItemsChanged = ({ viewableItems }) => {
+  const viewableItemsChanged = useCallback(({ viewableItems }) => {
     if (viewableItems.length > 0) {
       setActiveItem(viewableItems[0].key);
     }
-  };
+  }, []);
 
   return (
     <FlatList
@@ -91,8 +90,13 @@ const Trending = ({ posts }) => {
       horizontal
       keyExtractor={(item) => item.$id}
       renderItem={({ item }) => (
-       <Text className="text-3xl text-white">{item.id}</Text>
+        <TrendingItem activeItem={activeItem} item={item} />
       )}
+      onViewableItemsChanged={viewableItemsChanged}
+      viewabilityConfig={{
+        itemVisiblePercentThreshold: 70,
+      }}
+      contentOffset={{ x: 170 }}
     />
   );
 };
